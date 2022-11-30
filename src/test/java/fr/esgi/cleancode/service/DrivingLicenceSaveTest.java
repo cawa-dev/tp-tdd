@@ -2,14 +2,15 @@ package fr.esgi.cleancode.service;
 
 import fr.esgi.cleancode.model.DrivingLicence;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.mockito.Mock;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import static org.assertj.core.api.Assertions.assertThat;
-
+@ExtendWith(MockitoExtension.class)
 public class DrivingLicenceSaveTest {
 
-    @Mock
+    @InjectMocks
     DrivingLicenceSave drivingLicenceSave;
 
     @Test
