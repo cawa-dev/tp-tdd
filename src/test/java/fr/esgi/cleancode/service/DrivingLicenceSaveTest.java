@@ -1,11 +1,15 @@
 package fr.esgi.cleancode.service;
 
+import fr.esgi.cleancode.exception.InvalidDriverSocialSecurityNumberException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.*;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
 @ExtendWith(MockitoExtension.class)
 public class DrivingLicenceSaveTest {
 
@@ -69,5 +73,23 @@ public class DrivingLicenceSaveTest {
         Boolean actual = drivingLicenceSave.checkIfSocialSecurityNumberContainsFifteenNumbers(securitySocialNumber);
         // THEN
         assertThat(actual).isFalse();
+    }
+
+    @Test
+    void shouldThrowInvalidDriverSocialSecurityNumberExceptionIfSocialSecurityNumberIsInvalid(){
+        // GIVEN
+        String securitySocialNumber = "UwU54186541651UwU";
+        // WHEN AND THEN
+        assertThatExceptionOfType(InvalidDriverSocialSecurityNumberException.class).isThrownBy(()
+                -> drivingLicenceSave.checkSocialSecurityNumberValidity(securitySocialNumber));
+
+    }
+    @Test()
+    void shouldNotThrowInvalidDriverSocialSecurityNumberExceptionIfSocialScurityNumberIsValid(){
+        // GIVEN
+        String securitySocialNumber = "123456789123456";
+        // WHEN AND THEN
+        assertThatNoException().isThrownBy(
+        () -> drivingLicenceSave.checkSocialSecurityNumberValidity(securitySocialNumber));
     }
 }
