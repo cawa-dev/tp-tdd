@@ -24,4 +24,11 @@ class DrivingLicenceSave {
         }
         return true;
     }
+
+    public Boolean checkIfSocialSecurityNumberContainsFifteenNumbers(String securitySocialNumber) {
+        if(securitySocialNumber.length() == 15){
+            return true;
+        }
+        return false;
+    }
 }
