@@ -13,7 +13,7 @@ public class DrivingLicenceSaveTest {
     DrivingLicenceSave drivingLicenceSave;
 
     @Test
-    void shouldSaveDrivingLicenceWithGoodSocialNumber(){
+    void shouldReturnTrueIfSocialSecurityNumberIsNotNull(){
         //GIVEN
         final String socialNumber = "UwU";
         //WHEN
@@ -23,7 +23,7 @@ public class DrivingLicenceSaveTest {
     }
 
     @Test
-    void shouldNotSaveDrivingLicenceWhenSocialSecurityNumberIsNull(){
+    void shouldReturnFalseIfSocialSecurityNumberIsNull(){
         //GIVEN
         final String socialNumber = null;
         //WHEN
