@@ -1,20 +1,20 @@
 package fr.esgi.cleancode.service;
 
 import fr.esgi.cleancode.exception.InvalidDriverSocialSecurityNumberException;
-import fr.esgi.cleancode.model.DrivingLicence;
 
 class DrivingLicenceChecker {
 
     public void checkSocialSecurityNumberValidity(String securitySocialNumber) {
-        if(!checkIfSocialSecurityNumberIsNull(securitySocialNumber) ||
+        if (!checkIfSocialSecurityNumberIsNull(securitySocialNumber) ||
                 !checkIfSocialSecurityNumberContainsOnlyNumbers(securitySocialNumber) ||
-                !checkIfSocialSecurityNumberContainsFifteenNumbers(securitySocialNumber)){
+                !checkIfSocialSecurityNumberContainsFifteenNumbers(securitySocialNumber)) {
             throw new InvalidDriverSocialSecurityNumberException("Security social number " + securitySocialNumber
                     + " is invalid");
         }
     }
-    Boolean checkIfSocialSecurityNumberIsNull(String socialSecurityNumber){
-        if(socialSecurityNumber == null){
+
+    Boolean checkIfSocialSecurityNumberIsNull(String socialSecurityNumber) {
+        if (socialSecurityNumber == null) {
             return false;
         }
         return true;
@@ -22,8 +22,8 @@ class DrivingLicenceChecker {
 
     Boolean checkIfSocialSecurityNumberContainsOnlyNumbers(String socialSecurityNumberGiven) {
         char[] chars = socialSecurityNumberGiven.toCharArray();
-        for(char c : chars){
-            if(!Character.isDigit(c)){
+        for (char c : chars) {
+            if (!Character.isDigit(c)) {
                 return false;
             }
         }
@@ -31,7 +31,7 @@ class DrivingLicenceChecker {
     }
 
     Boolean checkIfSocialSecurityNumberContainsFifteenNumbers(String securitySocialNumber) {
-        if(securitySocialNumber.length() == 15){
+        if (securitySocialNumber.length() == 15) {
             return true;
         }
         return false;
