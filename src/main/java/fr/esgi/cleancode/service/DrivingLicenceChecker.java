@@ -3,12 +3,16 @@ package fr.esgi.cleancode.service;
 import fr.esgi.cleancode.exception.InvalidDriverSocialSecurityNumberException;
 import fr.esgi.cleancode.model.DrivingLicence;
 
-class DrivingLicenceSave {
+class DrivingLicenceChecker {
 
-    public void save(DrivingLicence drivingLicence) {
-        checkIfSocialSecurityNumberIsNull(drivingLicence.getDriverSocialSecurityNumber());
+    public void checkSocialSecurityNumberValidity(String securitySocialNumber) {
+        if(!checkIfSocialSecurityNumberIsNull(securitySocialNumber) ||
+                !checkIfSocialSecurityNumberContainsOnlyNumbers(securitySocialNumber) ||
+                !checkIfSocialSecurityNumberContainsFifteenNumbers(securitySocialNumber)){
+            throw new InvalidDriverSocialSecurityNumberException("Security social number " + securitySocialNumber
+                    + " is invalid");
+        }
     }
-
     Boolean checkIfSocialSecurityNumberIsNull(String socialSecurityNumber){
         if(socialSecurityNumber == null){
             return false;
@@ -31,14 +35,5 @@ class DrivingLicenceSave {
             return true;
         }
         return false;
-    }
-
-    public void checkSocialSecurityNumberValidity(String securitySocialNumber) {
-        if(!checkIfSocialSecurityNumberIsNull(securitySocialNumber) ||
-        !checkIfSocialSecurityNumberContainsOnlyNumbers(securitySocialNumber) ||
-        !checkIfSocialSecurityNumberContainsFifteenNumbers(securitySocialNumber)){
-            throw new InvalidDriverSocialSecurityNumberException("Security social number " + securitySocialNumber
-                    + " is invalid");
-        }
     }
 }

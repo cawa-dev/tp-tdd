@@ -10,17 +10,17 @@ import static org.assertj.core.api.Assertions.*;
 
 
 @ExtendWith(MockitoExtension.class)
-public class DrivingLicenceSaveTest {
+public class DrivingLicenceCheckSocialSecurityNumberTest {
 
     @InjectMocks
-    DrivingLicenceSave drivingLicenceSave;
+    DrivingLicenceChecker drivingLicenceChecker;
 
     @Test
     void shouldReturnTrueIfSocialSecurityNumberIsNotNull(){
         //GIVEN
         final String socialNumber = "UwU";
         //WHEN
-        Boolean actual = drivingLicenceSave.checkIfSocialSecurityNumberIsNull(socialNumber);
+        Boolean actual = drivingLicenceChecker.checkIfSocialSecurityNumberIsNull(socialNumber);
         //THEN
         assertThat(actual).isTrue();
     }
@@ -30,7 +30,7 @@ public class DrivingLicenceSaveTest {
         //GIVEN
         final String socialNumber = null;
         //WHEN
-        Boolean actual = drivingLicenceSave.checkIfSocialSecurityNumberIsNull(socialNumber);
+        Boolean actual = drivingLicenceChecker.checkIfSocialSecurityNumberIsNull(socialNumber);
         //THEN
         assertThat(actual).isFalse();
     }
@@ -40,7 +40,7 @@ public class DrivingLicenceSaveTest {
         // GIVEN
         String socialSecurityNumberGiven = "123456789";
         // WHEN
-        Boolean actual = drivingLicenceSave.checkIfSocialSecurityNumberContainsOnlyNumbers(socialSecurityNumberGiven);
+        Boolean actual = drivingLicenceChecker.checkIfSocialSecurityNumberContainsOnlyNumbers(socialSecurityNumberGiven);
         // THEN
         assertThat(actual).isTrue();
     }
@@ -50,7 +50,7 @@ public class DrivingLicenceSaveTest {
         // GIVEN
         String socialSecurityNumberGiven = "bla123456789blabla";
         // WHEN
-        Boolean actual = drivingLicenceSave.checkIfSocialSecurityNumberContainsOnlyNumbers(socialSecurityNumberGiven);
+        Boolean actual = drivingLicenceChecker.checkIfSocialSecurityNumberContainsOnlyNumbers(socialSecurityNumberGiven);
         // THEN
         assertThat(actual).isFalse();
     }
@@ -60,7 +60,7 @@ public class DrivingLicenceSaveTest {
         // GIVEN
         String securitySocialNumber = "123456789123456";
         // WHEN
-        Boolean actual = drivingLicenceSave.checkIfSocialSecurityNumberContainsFifteenNumbers(securitySocialNumber);
+        Boolean actual = drivingLicenceChecker.checkIfSocialSecurityNumberContainsFifteenNumbers(securitySocialNumber);
         // THEN
         assertThat(actual).isTrue();
     }
@@ -69,7 +69,7 @@ public class DrivingLicenceSaveTest {
         // GIVEN
         String securitySocialNumber = "123456789123456878655565";
         // WHEN
-        Boolean actual = drivingLicenceSave.checkIfSocialSecurityNumberContainsFifteenNumbers(securitySocialNumber);
+        Boolean actual = drivingLicenceChecker.checkIfSocialSecurityNumberContainsFifteenNumbers(securitySocialNumber);
         // THEN
         assertThat(actual).isFalse();
     }
@@ -80,7 +80,7 @@ public class DrivingLicenceSaveTest {
         String securitySocialNumber = "UwU54186541651UwU";
         // WHEN AND THEN
         assertThatExceptionOfType(InvalidDriverSocialSecurityNumberException.class).isThrownBy(()
-                -> drivingLicenceSave.checkSocialSecurityNumberValidity(securitySocialNumber));
+                -> drivingLicenceChecker.checkSocialSecurityNumberValidity(securitySocialNumber));
 
     }
     @Test()
@@ -89,6 +89,6 @@ public class DrivingLicenceSaveTest {
         String securitySocialNumber = "123456789123456";
         // WHEN AND THEN
         assertThatNoException().isThrownBy(
-        () -> drivingLicenceSave.checkSocialSecurityNumberValidity(securitySocialNumber));
+        () -> drivingLicenceChecker.checkSocialSecurityNumberValidity(securitySocialNumber));
     }
 }
