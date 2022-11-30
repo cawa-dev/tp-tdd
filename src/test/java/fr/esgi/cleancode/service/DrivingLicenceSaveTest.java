@@ -51,4 +51,23 @@ public class DrivingLicenceSaveTest {
         // THEN
         assertThat(actual).isFalse();
     }
+
+    @Test
+    void shouldReturnTrueIfContainsFifteenNumbers(){
+        // GIVEN
+        String securitySocialNumber = "123456789123456";
+        // WHEN
+        Boolean actual = drivingLicenceSave.checkIfSocialSecurityNumberContainsFifteenNumbers(securitySocialNumber);
+        // THEN
+        assertThat(actual).isTrue();
+    }
+    @Test
+    void shouldReturnFalseIfDoNotContainsFifteenNumbers(){
+        // GIVEN
+        String securitySocialNumber = "123456789123456878655565";
+        // WHEN
+        Boolean actual = drivingLicenceSave.checkIfSocialSecurityNumberContainsFifteenNumbers(securitySocialNumber);
+        // THEN
+        assertThat(actual).isFalse();
+    }
 }
