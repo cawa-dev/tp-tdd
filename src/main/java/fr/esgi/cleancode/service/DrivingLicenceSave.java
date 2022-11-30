@@ -1,5 +1,6 @@
 package fr.esgi.cleancode.service;
 
+import fr.esgi.cleancode.exception.InvalidDriverSocialSecurityNumberException;
 import fr.esgi.cleancode.model.DrivingLicence;
 
 class DrivingLicenceSave {
@@ -30,5 +31,14 @@ class DrivingLicenceSave {
             return true;
         }
         return false;
+    }
+
+    public void checkSocialSecurityNumberValidity(String securitySocialNumber) {
+        if(!checkIfSocialSecurityNumberIsNull(securitySocialNumber) ||
+        !checkIfSocialSecurityNumberContainsOnlyNumbers(securitySocialNumber) ||
+        !checkIfSocialSecurityNumberContainsFifteenNumbers(securitySocialNumber)){
+            throw new InvalidDriverSocialSecurityNumberException("Security social number " + securitySocialNumber
+                    + " is invalid");
+        }
     }
 }
