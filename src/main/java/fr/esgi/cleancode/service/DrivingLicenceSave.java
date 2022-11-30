@@ -2,10 +2,14 @@ package fr.esgi.cleancode.service;
 
 import fr.esgi.cleancode.model.DrivingLicence;
 
-public class DrivingLicenceSave {
+class DrivingLicenceSave {
 
-    public Boolean save(DrivingLicence drivingLicence) {
-        if(drivingLicence.getDriverSocialSecurityNumber() == null){
+    public void save(DrivingLicence drivingLicence) {
+        checkIfSocialSecurityNumberIsNull(drivingLicence.getDriverSocialSecurityNumber());
+    }
+
+    Boolean checkIfSocialSecurityNumberIsNull(String socialSecurityNumber){
+        if(socialSecurityNumber == null){
             return false;
         }
         return true;

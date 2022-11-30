@@ -1,6 +1,5 @@
 package fr.esgi.cleancode.service;
 
-import fr.esgi.cleancode.model.DrivingLicence;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -17,9 +16,8 @@ public class DrivingLicenceSaveTest {
     void shouldSaveDrivingLicenceWithGoodSocialNumber(){
         //GIVEN
         final String socialNumber = "UwU";
-        final var drivingLicence =  DrivingLicence.builder().driverSocialSecurityNumber(socialNumber).build();
         //WHEN
-        Boolean saving = drivingLicenceSave.save(drivingLicence);
+        Boolean saving = drivingLicenceSave.checkIfSocialSecurityNumberIsNull(socialNumber);
         //THEN
         assertThat(saving).isTrue();
     }
@@ -28,9 +26,8 @@ public class DrivingLicenceSaveTest {
     void shouldNotSaveDrivingLicenceWhenSocialSecurityNumberIsNull(){
         //GIVEN
         final String socialNumber = null;
-        final var drivingLicence =  DrivingLicence.builder().driverSocialSecurityNumber(socialNumber).build();
         //WHEN
-        Boolean saving = drivingLicenceSave.save(drivingLicence);
+        Boolean saving = drivingLicenceSave.checkIfSocialSecurityNumberIsNull(socialNumber);
         //THEN
         assertThat(saving).isFalse();
     }
