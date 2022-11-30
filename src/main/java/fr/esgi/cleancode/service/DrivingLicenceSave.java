@@ -14,4 +14,14 @@ class DrivingLicenceSave {
         }
         return true;
     }
+
+    Boolean checkifSocialSecurityNumberContainsNumber(String socialSecurityNumberGiven) {
+        char[] chars = socialSecurityNumberGiven.toCharArray();
+        for(char c : chars){
+            if(!Character.isDigit(c)){
+                return false;
+            }
+        }
+        return true;
+    }
 }

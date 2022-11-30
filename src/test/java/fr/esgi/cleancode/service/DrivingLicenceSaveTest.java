@@ -45,7 +45,7 @@ public class DrivingLicenceSaveTest {
     @Test
     void shouldNotContainsOnlyNumbersInSocialSecurityNumber() {
         // GIVEN
-        String socialSecurityNumberGiven = "blablabla";
+        String socialSecurityNumberGiven = "bla123456789blabla";
         // WHEN
         Boolean actual = drivingLicenceSave.checkifSocialSecurityNumberContainsNumber(socialSecurityNumberGiven);
         // THEN
