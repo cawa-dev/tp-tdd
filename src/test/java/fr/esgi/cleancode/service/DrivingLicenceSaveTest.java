@@ -17,9 +17,9 @@ public class DrivingLicenceSaveTest {
         //GIVEN
         final String socialNumber = "UwU";
         //WHEN
-        Boolean saving = drivingLicenceSave.checkIfSocialSecurityNumberIsNull(socialNumber);
+        Boolean actual = drivingLicenceSave.checkIfSocialSecurityNumberIsNull(socialNumber);
         //THEN
-        assertThat(saving).isTrue();
+        assertThat(actual).isTrue();
     }
 
     @Test
@@ -27,8 +27,8 @@ public class DrivingLicenceSaveTest {
         //GIVEN
         final String socialNumber = null;
         //WHEN
-        Boolean saving = drivingLicenceSave.checkIfSocialSecurityNumberIsNull(socialNumber);
+        Boolean actual = drivingLicenceSave.checkIfSocialSecurityNumberIsNull(socialNumber);
         //THEN
-        assertThat(saving).isFalse();
+        assertThat(actual).isFalse();
     }
 }
