@@ -37,7 +37,7 @@ public class DrivingLicenceSaveTest {
         // GIVEN
         String socialSecurityNumberGiven = "123456789";
         // WHEN
-        Boolean actual = drivingLicenceSave.checkifSocialSecurityNumberContainsNumber(socialSecurityNumberGiven);
+        Boolean actual = drivingLicenceSave.checkIfSocialSecurityNumberContainsOnlyNumbers(socialSecurityNumberGiven);
         // THEN
         assertThat(actual).isTrue();
     }
@@ -47,7 +47,7 @@ public class DrivingLicenceSaveTest {
         // GIVEN
         String socialSecurityNumberGiven = "bla123456789blabla";
         // WHEN
-        Boolean actual = drivingLicenceSave.checkifSocialSecurityNumberContainsNumber(socialSecurityNumberGiven);
+        Boolean actual = drivingLicenceSave.checkIfSocialSecurityNumberContainsOnlyNumbers(socialSecurityNumberGiven);
         // THEN
         assertThat(actual).isFalse();
     }

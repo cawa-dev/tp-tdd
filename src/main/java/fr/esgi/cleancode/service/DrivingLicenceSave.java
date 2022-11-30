@@ -15,7 +15,7 @@ class DrivingLicenceSave {
         return true;
     }
 
-    Boolean checkifSocialSecurityNumberContainsNumber(String socialSecurityNumberGiven) {
+    Boolean checkIfSocialSecurityNumberContainsOnlyNumbers(String socialSecurityNumberGiven) {
         char[] chars = socialSecurityNumberGiven.toCharArray();
         for(char c : chars){
             if(!Character.isDigit(c)){
