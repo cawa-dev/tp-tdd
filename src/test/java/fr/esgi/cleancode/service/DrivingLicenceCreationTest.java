@@ -31,10 +31,11 @@ public class DrivingLicenceCreationTest {
 
     @Test
     void drivingLicenceShouldHaveTwelvePoints() {
-        verify(drivingLicenceGenerationService).generate(availablePoints.capture());
-        final var drivingLicensePoint = availablePoints.getValue();
+        // GIVEN
+        final var drivingLicense = drivingLicenceGenerationService.generateDrivingLicenceWithTwelvePoints();
+        // WHEN
+        final var drivingLicensePoints = drivingLicense.getAvailablePoints();
         // THEN
-        assertThat(drivingLicensePoint.getAvailablePoints()).isEqualTo(12);
+        assertThat(drivingLicensePoints).isEqualTo(12);
     }
-
 }
