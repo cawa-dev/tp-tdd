@@ -6,4 +6,7 @@ public class DrivingLicenceGenerationService {
     DrivingLicence generateDrivingLicenceWithTwelvePoints() {
         return DrivingLicence.builder().availablePoints(12).build();
     }
+
+    public DrivingLicence verifyIfSocialSecurityNumberIsGivenWhenWeCreateDrivingLicence(String driverSocialSecurityNumber) {
+    }
 }

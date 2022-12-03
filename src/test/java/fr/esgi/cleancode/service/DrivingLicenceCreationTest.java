@@ -30,4 +30,14 @@ public class DrivingLicenceCreationTest {
         // THEN
         assertThat(drivingLicensePoints).isEqualTo(12);
     }
+
+    @Test
+    void drivingLicenceHasSecuritySocialNumberWhenWeCreated(){
+        // GIVEN
+        final var drivingLicense = drivingLicenceGenerationService.verifyIfSocialSecurityNumberIsGivenWhenWeCreateDrivingLicence("pnl");
+        // WHEN
+        final var drivingLicenseSocialSecurityNumber = drivingLicense.getDriverSocialSecurityNumber();
+        // THEN
+        assertThat(drivingLicenseSocialSecurityNumber).isNotNull();
+    }
 }
