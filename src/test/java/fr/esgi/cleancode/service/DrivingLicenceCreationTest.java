@@ -1,19 +1,19 @@
 package fr.esgi.cleancode.service;
 
-import fr.esgi.cleancode.database.InMemoryDatabase;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 @ExtendWith(MockitoExtension.class)
 public class DrivingLicenceCreationTest {
 
     @Mock
-    InMemoryDatabase inMemoryDatabase;
+    DrivingLicenceChecker drivingLicenceChecker;
 
     @InjectMocks
     DrivingLicenceGenerationService drivingLicenceGenerationService;
@@ -32,12 +32,11 @@ public class DrivingLicenceCreationTest {
     }
 
     @Test
-    void drivingLicenceHasSecuritySocialNumberWhenWeCreated(){
-        // GIVEN
-        final var drivingLicense = drivingLicenceGenerationService.verifyIfSocialSecurityNumberIsGivenWhenWeCreateDrivingLicence("pnl");
-        // WHEN
-        final var drivingLicenseSocialSecurityNumber = drivingLicense.getDriverSocialSecurityNumber();
-        // THEN
-        assertThat(drivingLicenseSocialSecurityNumber).isNotNull();
+    void socialSecurityNumberValidShouldBeProvidedWhenWeSaveIt(){
+        final var securitySocialNumber = "123456789123456";
+
+        assertThatNoException().isThrownBy(
+                () -> drivingLicenceGenerationService
+                        .generateDrivingLicenceWhenSocialSecurityNumberIsProvidedAndItHasBeenChecked(securitySocialNumber));
     }
 }
