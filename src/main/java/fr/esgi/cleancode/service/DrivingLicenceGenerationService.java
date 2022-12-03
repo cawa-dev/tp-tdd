@@ -8,5 +8,6 @@ public class DrivingLicenceGenerationService {
     }
 
     public DrivingLicence verifyIfSocialSecurityNumberIsGivenWhenWeCreateDrivingLicence(String driverSocialSecurityNumber) {
+        return DrivingLicence.builder().driverSocialSecurityNumber(driverSocialSecurityNumber).availablePoints(12).build();
     }
 }
