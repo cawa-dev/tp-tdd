@@ -13,7 +13,8 @@ public class DrivingLicenceChecker {
     }
 
     public boolean checkIfSocialSecurityNumberIsNull(String socialSecurityNumber) {
-        if (socialSecurityNumber == null) throw new InvalidDriverSocialSecurityNumberException("The Social Security Number is required !");
+        if (socialSecurityNumber == null)
+            throw new InvalidDriverSocialSecurityNumberException("The Social Security Number is required !");
         return true;
     }
 
@@ -28,7 +29,8 @@ public class DrivingLicenceChecker {
     }
 
     public boolean checkIfSocialSecurityNumberContainsFifteenNumbers(String securitySocialNumber) {
-        if (securitySocialNumber.length() > 15) throw new InvalidDriverSocialSecurityNumberException("The Social Security Number should contains only fifteen numbers !");
+        if (securitySocialNumber.length() != 15)
+            throw new InvalidDriverSocialSecurityNumberException("The Social Security Number should contains only fifteen numbers !");
         return true;
     }
 }

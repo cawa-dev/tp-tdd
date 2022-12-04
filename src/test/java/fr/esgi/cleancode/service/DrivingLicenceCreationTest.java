@@ -26,17 +26,10 @@ public class DrivingLicenceCreationTest {
     }
 
     @Test
-    void socialSecurityNumberIsNotValidButHeIsProvidedWhenWeSaveIt() {
-        final var invalidSocialSecurityNumber = "123456789123456sacha";
-        assertThatThrownBy(() -> drivingLicenceGenerationService
-                .generateDrivingLicenceWhenSocialSecurityNumberIsProvidedAndItHasBeenChecked(invalidSocialSecurityNumber));
-    }
-
-    @Test
-    void socialSecurityNumberValidShouldBeProvidedWhenWeSaveIt() {
-        final var securitySocialNumber = "123456789123456";
+    void itShouldNotThrowAnErrorWhenTheSocialSecurityNumberIsValid() {
+        final var givenSocialSecurityNumberValid = "123456789123456";
         assertThatNoException().isThrownBy(
                 () -> drivingLicenceGenerationService
-                        .generateDrivingLicenceWhenSocialSecurityNumberIsProvidedAndItHasBeenChecked(securitySocialNumber));
+                        .generateDrivingLicenceWhenSocialSecurityNumberIsProvidedAndItHasBeenChecked(givenSocialSecurityNumberValid));
     }
 }

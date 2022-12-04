@@ -1,6 +1,7 @@
 package fr.esgi.cleancode.service;
 
 import fr.esgi.cleancode.exception.InvalidDriverSocialSecurityNumberException;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -17,60 +18,67 @@ public class DrivingLicenceCheckSocialSecurityNumberTest {
     DrivingLicenceChecker drivingLicenceChecker;
 
     @Test
-    void shouldReturnTrueIfSocialSecurityNumberIsNotNull() {
-        final String socialNumber = "UwU";
-        final var actual = drivingLicenceChecker.checkIfSocialSecurityNumberIsNull(socialNumber);
+    void shouldReturnIfSocialSecurityNumberIsNotNull() {
+        final var givenSocialSecurityNumberNotNull = "UwU";
+        final var actual = drivingLicenceChecker.checkIfSocialSecurityNumberIsNull(givenSocialSecurityNumberNotNull);
         assertThat(actual).isTrue();
     }
 
     @Test
     void shouldThrowExceptionIfSocialSecurityNumberIsNull() {
+        final String givenSocialSecurityNumberNull = null;
         assertThatExceptionOfType(InvalidDriverSocialSecurityNumberException.class)
                 .isThrownBy(() -> drivingLicenceChecker
-                        .checkIfSocialSecurityNumberIsNull(null));
+                        .checkIfSocialSecurityNumberIsNull(givenSocialSecurityNumberNull));
     }
 
     @Test
     void shouldContainsOnlyNumbersInSocialSecurityNumber() {
-        String socialSecurityNumberGiven = "123456789";
-        Boolean actual = drivingLicenceChecker.checkIfSocialSecurityNumberContainsOnlyNumbers(socialSecurityNumberGiven);
+        String givenSocialSecurityNumberWithNumbersOnly = "123456789";
+        Boolean actual = drivingLicenceChecker
+                .checkIfSocialSecurityNumberContainsOnlyNumbers(givenSocialSecurityNumberWithNumbersOnly);
         assertThat(actual).isTrue();
     }
 
     @Test
     void shouldThrowExceptionIfNotContainsOnlyNumbersInSocialSecurityNumber() {
-        final var invalidSocialSecurityNumber = "bla123456789blabla";
+        final var givenInvalidSocialSecurityNumberWithLettersIn = "bla123456789blabla";
         assertThatExceptionOfType(InvalidDriverSocialSecurityNumberException.class)
-                .isThrownBy(() -> drivingLicenceChecker.checkIfSocialSecurityNumberContainsOnlyNumbers(invalidSocialSecurityNumber));
+                .isThrownBy(() -> drivingLicenceChecker.checkIfSocialSecurityNumberContainsOnlyNumbers(givenInvalidSocialSecurityNumberWithLettersIn));
     }
 
     @Test
     void shouldReturnTrueIfContainsFifteenNumbers() {
-        String securitySocialNumber = "123456789123456";
-        Boolean actual = drivingLicenceChecker.checkIfSocialSecurityNumberContainsFifteenNumbers(securitySocialNumber);
+        final var givenSecuritySocialNumberWithFifteenNumbers = "123456789123456";
+        final boolean actual = drivingLicenceChecker
+                .checkIfSocialSecurityNumberContainsFifteenNumbers(givenSecuritySocialNumberWithFifteenNumbers);
         assertThat(actual).isTrue();
     }
 
     @Test
     void shouldThrowExceptionIfItDoNotContainsFifteenNumbers() {
-        final var invalidSecuritySocialNumber = "123456789123456878655565";
+        final var givenSecuritySocialNumberWithMoreThanFifteenNumbers = "123456789123456878655565";
         assertThatExceptionOfType(InvalidDriverSocialSecurityNumberException.class)
-                .isThrownBy(() -> drivingLicenceChecker.checkIfSocialSecurityNumberContainsFifteenNumbers(invalidSecuritySocialNumber));
+                .isThrownBy(() -> drivingLicenceChecker
+                        .checkIfSocialSecurityNumberContainsFifteenNumbers(givenSecuritySocialNumberWithMoreThanFifteenNumbers));
     }
 
     @Test
     void shouldThrowInvalidDriverSocialSecurityNumberExceptionIfSocialSecurityNumberIsInvalid() {
-        final var securitySocialNumber = "UwU54186541651UwU";
-        assertThatExceptionOfType(InvalidDriverSocialSecurityNumberException.class).isThrownBy(()
-                -> drivingLicenceChecker.checkSocialSecurityNumberValidity(securitySocialNumber));
+        final var givenSocialSecurityNumberInvalid = "UwU54186541651UwU";
+        assertThatExceptionOfType(InvalidDriverSocialSecurityNumberException.class)
+                .isThrownBy(() -> drivingLicenceChecker
+                        .checkSocialSecurityNumberValidity(givenSocialSecurityNumberInvalid));
 
     }
 
     @Test()
-    void shouldNotThrowInvalidDriverSocialSecurityNumberExceptionIfSocialScurityNumberIsValid() {
-        final var securitySocialNumber = "123456789123456";
-        boolean actual = drivingLicenceChecker.checkSocialSecurityNumberValidity(securitySocialNumber);
-        assertDoesNotThrow(() -> drivingLicenceChecker.checkSocialSecurityNumberValidity(securitySocialNumber));
+    void shouldNotThrowInvalidDriverSocialSecurityNumberExceptionIfSocialSecurityNumberIsValid() {
+        final var givenSocialSecurityNumberValid = "123456789123456";
+        final var actual = drivingLicenceChecker
+                .checkSocialSecurityNumberValidity(givenSocialSecurityNumberValid);
+        assertDoesNotThrow(() -> drivingLicenceChecker
+                .checkSocialSecurityNumberValidity(givenSocialSecurityNumberValid));
         assertThat(actual).isTrue();
     }
 }
