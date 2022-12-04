@@ -1,7 +1,10 @@
 package fr.esgi.cleancode.service;
 
+import fr.esgi.cleancode.exception.InvalidDriverSocialSecurityNumberException;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -18,18 +21,17 @@ public class DrivingLicenceCreationTest {
     private DrivingLicenceChecker drivingLicenceChecker;
 
     @Test
-    void drivingLicenceShouldHaveTwelvePoints() {
+    public void drivingLicenceShouldHaveTwelvePoints() {
         final var drivingLicense = drivingLicenceGenerationService.generateDrivingLicenceWithTwelvePoints();
         final var drivingLicensePoints = drivingLicense.getAvailablePoints();
 
         assertThat(drivingLicensePoints).isEqualTo(12);
     }
-
-    @Test
-    void itShouldNotThrowAnErrorWhenTheSocialSecurityNumberIsValid() {
-        final var givenSocialSecurityNumberValid = "123456789123456";
-        assertThatNoException().isThrownBy(
-                () -> drivingLicenceGenerationService
-                        .generateDrivingLicenceWhenSocialSecurityNumberIsProvidedAndItHasBeenChecked(givenSocialSecurityNumberValid));
+    @ParameterizedTest
+    @ValueSource(strings = {"123sacha4567sarah891noe2345", "123456789123456"})
+    public void itShouldThrowAnExceptionWhenTheSocialSecurityNumberIsInvalid(String sourceDriverSocialSecurityNumber) {
+        assertThatExceptionOfType(InvalidDriverSocialSecurityNumberException.class)
+                .isThrownBy(() -> drivingLicenceGenerationService
+                        .generateDrivingLicenceWhenSocialSecurityNumberIsProvidedAndItHasBeenChecked(sourceDriverSocialSecurityNumber));
     }
 }

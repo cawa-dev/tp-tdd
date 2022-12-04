@@ -10,6 +10,7 @@ import java.util.UUID;
 @Value
 @Builder
 public class DrivingLicence {
+
     UUID id;
     String driverSocialSecurityNumber;
 
