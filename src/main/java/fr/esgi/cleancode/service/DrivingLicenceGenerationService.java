@@ -2,15 +2,17 @@ package fr.esgi.cleancode.service;
 
 import fr.esgi.cleancode.exception.InvalidDriverSocialSecurityNumberException;
 import fr.esgi.cleancode.model.DrivingLicence;
+import lombok.RequiredArgsConstructor;
 
 import java.util.UUID;
 
+@RequiredArgsConstructor
 public class DrivingLicenceGenerationService {
 
     private final DrivingLicenceChecker drivingLicenceChecker;
 
-    public DrivingLicenceGenerationService(DrivingLicenceChecker drivingLicenceChecker) {
-        this.drivingLicenceChecker = drivingLicenceChecker;
+    public DrivingLicence generateDrivingLicenceWithTwelvePoints() {
+        return DrivingLicence.builder().availablePoints(12).build();
     }
 
     public DrivingLicence generateDrivingLicenceWhenSocialSecurityNumberIsProvidedAndItHasBeenChecked(String givenDriverSocialSecurityNumber)
@@ -21,9 +23,5 @@ public class DrivingLicenceGenerationService {
                 .driverSocialSecurityNumber(givenDriverSocialSecurityNumber)
                 .availablePoints(12)
                 .build();
-    }
-
-    public DrivingLicence generateDrivingLicenceWithTwelvePoints() {
-        return DrivingLicence.builder().availablePoints(12).build();
     }
 }
