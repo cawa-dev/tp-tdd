@@ -2,39 +2,33 @@ package fr.esgi.cleancode.service;
 
 import fr.esgi.cleancode.exception.InvalidDriverSocialSecurityNumberException;
 
-class DrivingLicenceChecker {
+public class DrivingLicenceChecker {
 
-    public Boolean checkSocialSecurityNumberValidity(String securitySocialNumber) {
-        if (!checkIfSocialSecurityNumberIsNull(securitySocialNumber) ||
-                !checkIfSocialSecurityNumberContainsOnlyNumbers(securitySocialNumber) ||
-                !checkIfSocialSecurityNumberContainsFifteenNumbers(securitySocialNumber)) {
-            throw new InvalidDriverSocialSecurityNumberException("Security social number " + securitySocialNumber
-                    + " is invalid");
-        }
+    public boolean checkSocialSecurityNumberValidity(String securitySocialNumber) {
+        checkIfSocialSecurityNumberIsNull(securitySocialNumber);
+        checkIfSocialSecurityNumberContainsOnlyNumbers(securitySocialNumber);
+        checkIfSocialSecurityNumberContainsFifteenNumbers(securitySocialNumber);
+
         return true;
     }
 
-    Boolean checkIfSocialSecurityNumberIsNull(String socialSecurityNumber) {
-        if (socialSecurityNumber == null) {
-            return false;
-        }
+    public boolean checkIfSocialSecurityNumberIsNull(String socialSecurityNumber) {
+        if (socialSecurityNumber == null) throw new InvalidDriverSocialSecurityNumberException("The Social Security Number is required !");
         return true;
     }
 
-    Boolean checkIfSocialSecurityNumberContainsOnlyNumbers(String socialSecurityNumberGiven) {
+    public boolean checkIfSocialSecurityNumberContainsOnlyNumbers(String socialSecurityNumberGiven) {
         char[] chars = socialSecurityNumberGiven.toCharArray();
         for (char c : chars) {
             if (!Character.isDigit(c)) {
-                return false;
+                throw new InvalidDriverSocialSecurityNumberException("The Social Security Number need to contain only number : " + socialSecurityNumberGiven + " !");
             }
         }
         return true;
     }
 
-    Boolean checkIfSocialSecurityNumberContainsFifteenNumbers(String securitySocialNumber) {
-        if (securitySocialNumber.length() == 15) {
-            return true;
-        }
-        return false;
+    public boolean checkIfSocialSecurityNumberContainsFifteenNumbers(String securitySocialNumber) {
+        if (securitySocialNumber.length() > 15) throw new InvalidDriverSocialSecurityNumberException("The Social Security Number should contains only fifteen numbers !");
+        return true;
     }
 }

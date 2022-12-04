@@ -7,34 +7,34 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import static org.assertj.core.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 @ExtendWith(MockitoExtension.class)
 public class DrivingLicenceCreationTest {
 
+    @InjectMocks
+    private DrivingLicenceGenerationService drivingLicenceGenerationService;
+
     @Mock
-    DrivingLicenceChecker drivingLicenceChecker;
-
-    @InjectMocks
-    DrivingLicenceGenerationService drivingLicenceGenerationService;
-
-    @InjectMocks
-    DrivingLicenceIdGenerationService drivingLicenceIdGenerationService;
+    private DrivingLicenceChecker drivingLicenceChecker;
 
     @Test
     void drivingLicenceShouldHaveTwelvePoints() {
-        // GIVEN
         final var drivingLicense = drivingLicenceGenerationService.generateDrivingLicenceWithTwelvePoints();
-        // WHEN
         final var drivingLicensePoints = drivingLicense.getAvailablePoints();
-        // THEN
+
         assertThat(drivingLicensePoints).isEqualTo(12);
     }
 
     @Test
-    void socialSecurityNumberValidShouldBeProvidedWhenWeSaveIt(){
-        final var securitySocialNumber = "123456789123456";
+    void socialSecurityNumberIsNotValidButHeIsProvidedWhenWeSaveIt() {
+        final var invalidSocialSecurityNumber = "123456789123456sacha";
+        assertThatThrownBy(() -> drivingLicenceGenerationService
+                .generateDrivingLicenceWhenSocialSecurityNumberIsProvidedAndItHasBeenChecked(invalidSocialSecurityNumber));
+    }
 
+    @Test
+    void socialSecurityNumberValidShouldBeProvidedWhenWeSaveIt() {
+        final var securitySocialNumber = "123456789123456";
         assertThatNoException().isThrownBy(
                 () -> drivingLicenceGenerationService
                         .generateDrivingLicenceWhenSocialSecurityNumberIsProvidedAndItHasBeenChecked(securitySocialNumber));
