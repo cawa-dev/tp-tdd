@@ -10,6 +10,9 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import static org.assertj.core.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 public class DrivingLicenceCreationTest {
@@ -30,8 +33,25 @@ public class DrivingLicenceCreationTest {
     @ParameterizedTest
     @ValueSource(strings = {"123sacha4567sarah891noe2345", "123456789123456"})
     public void itShouldThrowAnExceptionWhenTheSocialSecurityNumberIsInvalid(String sourceDriverSocialSecurityNumber) {
-        assertThatExceptionOfType(InvalidDriverSocialSecurityNumberException.class)
-                .isThrownBy(() -> drivingLicenceGenerationService
-                        .generateDrivingLicenceWhenSocialSecurityNumberIsProvidedAndItHasBeenChecked(sourceDriverSocialSecurityNumber));
+        if (!sourceDriverSocialSecurityNumber.matches("\\d{15}")) {
+            doThrow(new InvalidDriverSocialSecurityNumberException("Invalid social security number"))
+                    .when(drivingLicenceChecker).checkSocialSecurityNumberValidity(sourceDriverSocialSecurityNumber);
+        }
+        assertThrows(InvalidDriverSocialSecurityNumberException.class,
+                () -> drivingLicenceGenerationService.generateDrivingLicenceWhenSocialSecurityNumberIsProvidedAndItHasBeenChecked(sourceDriverSocialSecurityNumber));
     }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"123sacha4567sarah891noe2345", "123456789123456"})
+    public void itShouldNotThrowAnExceptionWhenTheSocialSecurityNumberIsValid(String sourceDriverSocialSecurityNumber) {
+        // Check if the given social security number is invalid
+        if (!sourceDriverSocialSecurityNumber.matches("\\d{15}")) {
+            doThrow(new InvalidDriverSocialSecurityNumberException("Invalid social security number"))
+                    .when(drivingLicenceChecker).checkSocialSecurityNumberValidity(sourceDriverSocialSecurityNumber);
+        }
+
+        // Ensure that the InvalidDriverSocialSecurityNumberException is not thrown
+        assertDoesNotThrow(() -> drivingLicenceGenerationService.generateDrivingLicenceWhenSocialSecurityNumberIsProvidedAndItHasBeenChecked(sourceDriverSocialSecurityNumber));
+    }
+
 }
