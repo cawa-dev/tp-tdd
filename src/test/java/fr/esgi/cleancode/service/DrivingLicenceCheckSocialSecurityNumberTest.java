@@ -69,7 +69,7 @@ public class DrivingLicenceCheckSocialSecurityNumberTest {
 
     }
 
-    @Test()
+    @Test
     public void shouldNotThrowInvalidDriverSocialSecurityNumberExceptionIfSocialSecurityNumberIsValid() {
         final var givenSocialSecurityNumberValid = "123456789123456";
         assertThatNoException()

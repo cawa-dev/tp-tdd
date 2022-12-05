@@ -1,6 +1,8 @@
 package fr.esgi.cleancode.service;
 
+import fr.esgi.cleancode.exception.InvalidAvailablesPointsException;
 import fr.esgi.cleancode.exception.InvalidDriverSocialSecurityNumberException;
+import fr.esgi.cleancode.model.DrivingLicence;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -22,38 +24,52 @@ public class DrivingLicenceCreationTest {
     private DrivingLicenceChecker drivingLicenceChecker;
 
     @Test
-    public void drivingLicenceShouldHaveTwelvePoints() {
+    public void drivingLicenceShouldBeCreateIfItHasTwelvePoints() {
         // GIVEN
-        final var drivingLicense = drivingLicenceGenerationService.generateDrivingLicenceWithTwelvePoints();
+        final var givenAvailablePoints = 12;
         // WHEN
-        final var drivingLicensePoints = drivingLicense.getAvailablePoints();
+        final DrivingLicence drivingLicence = drivingLicenceGenerationService
+                .generateDrivingLicenceWithPoints(givenAvailablePoints);
+        final var drivingLicencePoints = drivingLicence
+                .getAvailablePoints();
         // THEN
-        assertThat(drivingLicensePoints).isEqualTo(12);
+        assertThat(givenAvailablePoints).isEqualTo(drivingLicencePoints);
+        assertThatNoException().isThrownBy(() -> drivingLicenceGenerationService
+                .generateDrivingLicenceWithPoints(drivingLicencePoints));
+    }
+
+    @Test
+    public void drivingLicenceShouldNotBeCreateIfItHasNotTwelvePoints() {
+        final var givenAvailablePoints = 15;
+        assertThatExceptionOfType(InvalidAvailablesPointsException.class)
+                .isThrownBy(() -> drivingLicenceGenerationService
+                        .generateDrivingLicenceWithPoints(givenAvailablePoints));
     }
 
     @ParameterizedTest
     @ValueSource(strings = {"", "czeqfze", "123456"})
-    public void itShouldThrowAnExceptionWhenTheSocialSecurityNumberIsInvalid(String source) {
-        // STUB
+    public void itShouldThrowAnExceptionWhenTheSocialSecurityNumberIsInvalid(String givenSecurityNumberInvalid) {
+        // STUBBER
         doThrow(InvalidDriverSocialSecurityNumberException.class)
                 .when(drivingLicenceChecker)
-                .checkSocialSecurityNumberValidity(source);
+                .checkSocialSecurityNumberValidity(givenSecurityNumberInvalid);
         // WHEN
         assertThatExceptionOfType(InvalidDriverSocialSecurityNumberException.class)
                 .isThrownBy(() -> drivingLicenceGenerationService
-                        .generateDrivingLicenceWhenSocialSecurityNumberIsProvidedAndItHasBeenChecked(source));
+                        .generateDrivingLicenceWhenSocialSecurityNumberIsProvidedAndItHasBeenChecked(givenSecurityNumberInvalid));
+        verifyNoMoreInteractions(drivingLicenceChecker);
     }
 
     @ParameterizedTest
     @ValueSource(strings = {"546128761354972", "123456789123456"})
-    public void itShouldNotThrowAnExceptionWhenTheSocialSecurityNumberIsValid(String source) {
-        // STUB
+    public void itShouldNotThrowAnExceptionWhenTheSocialSecurityNumberIsValid(String givenSecurityNumberValid) {
+        // STUBBER
         doNothing()
                 .when(drivingLicenceChecker)
-                .checkSocialSecurityNumberValidity(source);
+                .checkSocialSecurityNumberValidity(givenSecurityNumberValid);
         // WHEN
         drivingLicenceGenerationService
-                .generateDrivingLicenceWhenSocialSecurityNumberIsProvidedAndItHasBeenChecked(source);
+                .generateDrivingLicenceWhenSocialSecurityNumberIsProvidedAndItHasBeenChecked(givenSecurityNumberValid);
+        verifyNoMoreInteractions(drivingLicenceChecker);
     }
-
 }
