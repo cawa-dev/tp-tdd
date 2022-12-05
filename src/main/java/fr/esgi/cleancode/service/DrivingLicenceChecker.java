@@ -4,13 +4,11 @@ import fr.esgi.cleancode.exception.InvalidDriverSocialSecurityNumberException;
 
 public class DrivingLicenceChecker {
 
-    protected Boolean checkSocialSecurityNumberValidity(String securitySocialNumber)
+    protected void checkSocialSecurityNumberValidity(String securitySocialNumber)
             throws InvalidDriverSocialSecurityNumberException {
         checkIfSocialSecurityNumberIsNull(securitySocialNumber);
         checkIfSocialSecurityNumberContainsOnlyNumbers(securitySocialNumber);
         checkIfSocialSecurityNumberContainsFifteenNumbers(securitySocialNumber);
-
-        return true;
     }
 
     protected boolean checkIfSocialSecurityNumberIsNull(String socialSecurityNumber) {

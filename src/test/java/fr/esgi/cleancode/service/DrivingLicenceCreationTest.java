@@ -1,7 +1,6 @@
 package fr.esgi.cleancode.service;
 
 import fr.esgi.cleancode.exception.InvalidDriverSocialSecurityNumberException;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -31,27 +30,30 @@ public class DrivingLicenceCreationTest {
         // THEN
         assertThat(drivingLicensePoints).isEqualTo(12);
     }
-    @Test
-    public void itShouldThrowAnExceptionWhenTheSocialSecurityNumberIsInvalid() {
-        // GIVEN
-        final var givenInvalidSocialSecurityNumber = "totosachanoesarah1234567";
+
+    @ParameterizedTest
+    @ValueSource(strings = {"", "czeqfze", "123456"})
+    public void itShouldThrowAnExceptionWhenTheSocialSecurityNumberIsInvalid(String source) {
+        // STUB
+        doThrow(InvalidDriverSocialSecurityNumberException.class)
+                .when(drivingLicenceChecker)
+                .checkSocialSecurityNumberValidity(source);
         // WHEN
-        drivingLicenceGenerationService.generateDrivingLicenceWhenSocialSecurityNumberIsProvidedAndItHasBeenChecked(givenInvalidSocialSecurityNumber);
-        verify(drivingLicenceChecker, atLeastOnce())
-                .checkSocialSecurityNumberValidity(givenInvalidSocialSecurityNumber);
-        // THEN
-        assertThatException()
+        assertThatExceptionOfType(InvalidDriverSocialSecurityNumberException.class)
                 .isThrownBy(() -> drivingLicenceGenerationService
-                        .generateDrivingLicenceWhenSocialSecurityNumberIsProvidedAndItHasBeenChecked(givenInvalidSocialSecurityNumber));
-        verifyNoMoreInteractions(drivingLicenceChecker);
+                        .generateDrivingLicenceWhenSocialSecurityNumberIsProvidedAndItHasBeenChecked(source));
     }
 
-    @Test
-    @Disabled
-    public void itShouldNotThrowAnExceptionWhenTheSocialSecurityNumberIsValid(String sourceDriverSocialSecurityNumber) {
-        // GIVEN
+    @ParameterizedTest
+    @ValueSource(strings = {"546128761354972", "123456789123456"})
+    public void itShouldNotThrowAnExceptionWhenTheSocialSecurityNumberIsValid(String source) {
+        // STUB
+        doNothing()
+                .when(drivingLicenceChecker)
+                .checkSocialSecurityNumberValidity(source);
         // WHEN
-        // THEN
+        drivingLicenceGenerationService
+                .generateDrivingLicenceWhenSocialSecurityNumberIsProvidedAndItHasBeenChecked(source);
     }
 
 }

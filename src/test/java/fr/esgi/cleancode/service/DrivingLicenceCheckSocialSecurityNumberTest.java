@@ -6,9 +6,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.assertj.core.api.Assertions.*;
 
 @ExtendWith(MockitoExtension.class)
 public class DrivingLicenceCheckSocialSecurityNumberTest {
@@ -74,10 +72,8 @@ public class DrivingLicenceCheckSocialSecurityNumberTest {
     @Test()
     public void shouldNotThrowInvalidDriverSocialSecurityNumberExceptionIfSocialSecurityNumberIsValid() {
         final var givenSocialSecurityNumberValid = "123456789123456";
-        final var actual = drivingLicenceChecker
-                .checkSocialSecurityNumberValidity(givenSocialSecurityNumberValid);
-        assertDoesNotThrow(() -> drivingLicenceChecker
-                .checkSocialSecurityNumberValidity(givenSocialSecurityNumberValid));
-        assertThat(actual).isTrue();
+        assertThatNoException()
+                .isThrownBy(() -> drivingLicenceChecker
+                        .checkSocialSecurityNumberValidity(givenSocialSecurityNumberValid));
     }
 }
