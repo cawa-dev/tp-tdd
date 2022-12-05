@@ -4,7 +4,8 @@ import fr.esgi.cleancode.exception.InvalidDriverSocialSecurityNumberException;
 
 public class DrivingLicenceChecker {
 
-    protected Boolean checkSocialSecurityNumberValidity(String securitySocialNumber) {
+    protected Boolean checkSocialSecurityNumberValidity(String securitySocialNumber)
+            throws InvalidDriverSocialSecurityNumberException {
         checkIfSocialSecurityNumberIsNull(securitySocialNumber);
         checkIfSocialSecurityNumberContainsOnlyNumbers(securitySocialNumber);
         checkIfSocialSecurityNumberContainsFifteenNumbers(securitySocialNumber);

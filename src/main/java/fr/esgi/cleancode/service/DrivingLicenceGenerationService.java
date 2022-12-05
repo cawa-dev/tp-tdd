@@ -15,8 +15,7 @@ public class DrivingLicenceGenerationService {
         return DrivingLicence.builder().availablePoints(12).build();
     }
 
-    public DrivingLicence generateDrivingLicenceWhenSocialSecurityNumberIsProvidedAndItHasBeenChecked(String givenDriverSocialSecurityNumber)
-            throws InvalidDriverSocialSecurityNumberException {
+    public DrivingLicence generateDrivingLicenceWhenSocialSecurityNumberIsProvidedAndItHasBeenChecked(String givenDriverSocialSecurityNumber) {
         drivingLicenceChecker.checkSocialSecurityNumberValidity(givenDriverSocialSecurityNumber);
         return DrivingLicence.builder()
                 .id(UUID.randomUUID())
