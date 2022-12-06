@@ -7,7 +7,7 @@ import java.util.UUID;
 
 public class DrivingLicenceGenerationService {
 
-    public static DrivingLicence constGoodDrivingLicence = DrivingLicence
+    private final static DrivingLicence constGoodDrivingLicence = DrivingLicence
             .builder()
             .id(UUID.randomUUID())
             .driverSocialSecurityNumber("123456789123456")
