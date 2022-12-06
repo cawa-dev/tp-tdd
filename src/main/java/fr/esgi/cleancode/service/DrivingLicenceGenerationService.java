@@ -3,28 +3,24 @@ package fr.esgi.cleancode.service;
 import fr.esgi.cleancode.exception.InvalidAvailablesPointsException;
 import fr.esgi.cleancode.exception.InvalidDriverSocialSecurityNumberException;
 import fr.esgi.cleancode.model.DrivingLicence;
+import lombok.RequiredArgsConstructor;
 
-import java.util.UUID;
-
+@RequiredArgsConstructor
 public class DrivingLicenceGenerationService {
 
     private final DrivingLicenceChecker drivingLicenceChecker;
 
-    public DrivingLicenceGenerationService(DrivingLicenceChecker drivingLicenceChecker) {
-        this.drivingLicenceChecker = drivingLicenceChecker;
-    }
-
-    public DrivingLicence generateDrivingLicence(int availablePoints, String sourceDriverSocialSecurityNumber){
+    protected DrivingLicence generateDrivingLicence(int availablePoints, String socialSecurityNumber){
         generateDrivingLicenceWithPoints(availablePoints);
-        generateDrivingLicenceWhenSocialSecurityNumberIsProvidedAndItHasBeenChecked(sourceDriverSocialSecurityNumber);
+        generateDrivingLicenceWhenSocialSecurityNumberIsProvidedAndItHasBeenChecked(socialSecurityNumber);
         return DrivingLicence
                 .builder()
                 .availablePoints(availablePoints)
-                .driverSocialSecurityNumber(sourceDriverSocialSecurityNumber)
+                .driverSocialSecurityNumber(socialSecurityNumber)
                 .build();
     }
 
-    public DrivingLicence generateDrivingLicenceWithPoints(int sourceAvailablePoints) throws InvalidAvailablesPointsException {
+    protected DrivingLicence generateDrivingLicenceWithPoints(int sourceAvailablePoints) throws InvalidAvailablesPointsException {
         if (sourceAvailablePoints != 12) {
             throw new InvalidAvailablesPointsException("You cannot create an Driving Licence with : " + sourceAvailablePoints + " points");
         }
@@ -34,7 +30,7 @@ public class DrivingLicenceGenerationService {
                 .build();
     }
 
-    public DrivingLicence generateDrivingLicenceWhenSocialSecurityNumberIsProvidedAndItHasBeenChecked(String sourceDriverSocialSecurityNumber) throws InvalidDriverSocialSecurityNumberException {
+    protected DrivingLicence generateDrivingLicenceWhenSocialSecurityNumberIsProvidedAndItHasBeenChecked(String sourceDriverSocialSecurityNumber) throws InvalidDriverSocialSecurityNumberException {
         drivingLicenceChecker.checkSocialSecurityNumberValidity(sourceDriverSocialSecurityNumber);
         return DrivingLicence
                 .builder()

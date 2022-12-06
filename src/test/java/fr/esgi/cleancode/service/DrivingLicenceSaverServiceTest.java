@@ -17,8 +17,7 @@ import java.util.UUID;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 import static org.assertj.core.api.Assertions.assertThatNoException;
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.doThrow;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class DrivingLicenceSaverServiceTest {
@@ -55,7 +54,7 @@ class DrivingLicenceSaverServiceTest {
     void shouldNotSaveDrivingLicence() {
         // GIVEN
         final var givenRandomId = UUID.randomUUID();
-        final String givenSocialSecurityNumberInvalid = "123456789123456sachanoon";
+        final var givenSocialSecurityNumberInvalid = "123456789123456sachanoon";
         final int givenAvailablePoints = 15;
         final var givenDrivingLicence = DrivingLicence
                 .builder()
@@ -71,5 +70,6 @@ class DrivingLicenceSaverServiceTest {
         assertThatExceptionOfType(InvalidDrivingLicenceException.class)
                 .isThrownBy(() -> drivingLicenceSaverService
                         .saveDrivingLicence(givenRandomId, givenDrivingLicence));
+        verifyNoMoreInteractions(drivingLicenceGenerationService, inMemoryDatabase);
     }
 }

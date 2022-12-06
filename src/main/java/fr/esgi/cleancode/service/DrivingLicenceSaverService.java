@@ -14,7 +14,7 @@ public class DrivingLicenceSaverService {
     public void saveDrivingLicence(UUID sourceId, DrivingLicence sourceDrivingLicence)
             throws InvalidDrivingLicenceException {
         final int availablePoints = sourceDrivingLicence.getAvailablePoints();
-        final String socialSecurityNumber = sourceDrivingLicence.getDriverSocialSecurityNumber();
+        final var socialSecurityNumber = sourceDrivingLicence.getDriverSocialSecurityNumber();
 
         drivingLicenceGenerationService.generateDrivingLicence(availablePoints, socialSecurityNumber);
 
