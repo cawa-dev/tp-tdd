@@ -1,18 +1,12 @@
 package fr.esgi.cleancode.service;
 
 import fr.esgi.cleancode.exception.InvalidAvailablesPointsException;
+import fr.esgi.cleancode.exception.InvalidDriverSocialSecurityNumberException;
 import fr.esgi.cleancode.model.DrivingLicence;
 
 import java.util.UUID;
 
 public class DrivingLicenceGenerationService {
-
-    private final static DrivingLicence constGoodDrivingLicence = DrivingLicence
-            .builder()
-            .id(UUID.randomUUID())
-            .driverSocialSecurityNumber("123456789123456")
-            .availablePoints(12)
-            .build();
 
     private final DrivingLicenceChecker drivingLicenceChecker;
 
@@ -20,15 +14,31 @@ public class DrivingLicenceGenerationService {
         this.drivingLicenceChecker = drivingLicenceChecker;
     }
 
-    public DrivingLicence generateDrivingLicenceWithPoints(int sourceAvailablePoints) {
+    public DrivingLicence generateDrivingLicence(int availablePoints, String sourceDriverSocialSecurityNumber){
+        generateDrivingLicenceWithPoints(availablePoints);
+        generateDrivingLicenceWhenSocialSecurityNumberIsProvidedAndItHasBeenChecked(sourceDriverSocialSecurityNumber);
+        return DrivingLicence
+                .builder()
+                .availablePoints(availablePoints)
+                .driverSocialSecurityNumber(sourceDriverSocialSecurityNumber)
+                .build();
+    }
+
+    public DrivingLicence generateDrivingLicenceWithPoints(int sourceAvailablePoints) throws InvalidAvailablesPointsException {
         if (sourceAvailablePoints != 12) {
             throw new InvalidAvailablesPointsException("You cannot create an Driving Licence with : " + sourceAvailablePoints + " points");
         }
-        return constGoodDrivingLicence;
+        return DrivingLicence
+                .builder()
+                .availablePoints(12)
+                .build();
     }
 
-    public DrivingLicence generateDrivingLicenceWhenSocialSecurityNumberIsProvidedAndItHasBeenChecked(String sourceDriverSocialSecurityNumber) {
+    public DrivingLicence generateDrivingLicenceWhenSocialSecurityNumberIsProvidedAndItHasBeenChecked(String sourceDriverSocialSecurityNumber) throws InvalidDriverSocialSecurityNumberException {
         drivingLicenceChecker.checkSocialSecurityNumberValidity(sourceDriverSocialSecurityNumber);
-        return constGoodDrivingLicence;
+        return DrivingLicence
+                .builder()
+                .driverSocialSecurityNumber("123456789123456")
+                .build();
     }
 }

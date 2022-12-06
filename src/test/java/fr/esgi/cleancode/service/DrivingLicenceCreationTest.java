@@ -1,7 +1,9 @@
 package fr.esgi.cleancode.service;
 
+import fr.esgi.cleancode.database.InMemoryDatabase;
 import fr.esgi.cleancode.exception.InvalidAvailablesPointsException;
 import fr.esgi.cleancode.exception.InvalidDriverSocialSecurityNumberException;
+import fr.esgi.cleancode.exception.InvalidDrivingLicenceException;
 import fr.esgi.cleancode.model.DrivingLicence;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -74,43 +76,5 @@ public class DrivingLicenceCreationTest {
         drivingLicenceGenerationService
                 .generateDrivingLicenceWhenSocialSecurityNumberIsProvidedAndItHasBeenChecked(givenSecurityNumberValid);
         verifyNoMoreInteractions(drivingLicenceChecker);
-    }
-
-    @Test
-    void shouldSaveDrivingLicence() {
-        // GIVEN
-        final var givenRandomId = UUID.randomUUID();
-        final String givenSocialSecurityNumberValid = "123456789123456";
-        final int givenAvailablePoints = 12;
-        final var givenDrivingLicence = DrivingLicence
-                .builder()
-                .id(givenRandomId)
-                .driverSocialSecurityNumber(givenSocialSecurityNumberValid)
-                .availablePoints(givenAvailablePoints)
-                .build();
-
-        // WHEN & THEN
-        assertThatNoException()
-                .isThrownBy(() -> drivingLicenceSaverService
-                .saveDrivingLience(givenDrivingLicence));
-    }
-
-    @Test
-    void shouldNotSaveDrivingLicence() {
-        // GIVEN
-        final var givenRandomId = UUID.randomUUID();
-        final String givenSocialSecurityNumberValid = "123456789123456sachanoon";
-        final int givenAvailablePoints = 15;
-        final var givenDrivingLicence = DrivingLicence
-                .builder()
-                .id(givenRandomId)
-                .driverSocialSecurityNumber(givenSocialSecurityNumberValid)
-                .availablePoints(givenAvailablePoints)
-                .build();
-
-        // WHEN & THEN
-        assertThatExceptionOfType(InvalidDrivingLicenceException.class)
-                .isThrownBy(() -> drivingLicenceSaverService
-                        .saveDrivingLience(givenDrivingLicence));
     }
 }
