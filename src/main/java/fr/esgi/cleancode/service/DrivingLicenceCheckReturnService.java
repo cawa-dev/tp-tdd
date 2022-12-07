@@ -10,7 +10,7 @@ import java.util.UUID;
 public class DrivingLicenceCheckReturnService {
     private final DrivingLicenceSaverService drivingLicenceSaverService;
 
-    public DrivingLicence checkReturn(UUID id, DrivingLicence randomDrivingLicence) {
+    public DrivingLicence checkReturn(UUID id, DrivingLicence randomDrivingLicence) throws InvalidDrivingLicenceException{
         drivingLicenceSaverService.saveDrivingLicence(id, randomDrivingLicence);
         return randomDrivingLicence;
     }
