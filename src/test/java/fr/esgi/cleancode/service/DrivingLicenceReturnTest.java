@@ -10,11 +10,12 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.UUID;
 
-import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
+import static org.assertj.core.api.Assertions.assertThatException;
 import static org.assertj.core.api.Assertions.assertThatNoException;
+import static org.mockito.Mockito.doThrow;
 
 @ExtendWith(MockitoExtension.class)
-public class DrivingLicenceReturnedTest {
+public class DrivingLicenceReturnTest {
 
     @InjectMocks
     private DrivingLicenceCheckReturnService drivingLicenceCheckReturnService;
@@ -26,38 +27,40 @@ public class DrivingLicenceReturnedTest {
     public void shouldReturnDrivingLicencWhenIsSaved() {
         // GIVEN
         final var givenId = UUID.randomUUID();
-        final var givenSocialSecuriteNumber = "123456789123456";
+        final var givenSocialSecurityNumber = "123456789123456";
         final var givenAvailablePoints = 12;
         final DrivingLicence randomDrivingLicence = DrivingLicence
                 .builder()
                 .id(givenId)
                 .availablePoints(givenAvailablePoints)
-                .driverSocialSecurityNumber(givenSocialSecuriteNumber)
+                .driverSocialSecurityNumber(givenSocialSecurityNumber)
                 .build();
-        // WHEN
-        // THEN
+        // WHEN & THEN
         assertThatNoException()
                 .isThrownBy(() -> drivingLicenceCheckReturnService
-                .checkReturn(givenId, randomDrivingLicence));
+                        .checkReturnedDrivingLicence(givenId, randomDrivingLicence));
     }
 
     @Test
-    public void shouldThrowEcptionWhileTryingToSaveDrivingLicence() {
+    public void shouldThrowExceptionIfInvalidDrivingLicenceWhileTryingToSave() {
         // GIVEN
         final var givenId = UUID.randomUUID();
-        final var givenSocialSecuriteNumber = "uwu";
+        final var givenSocialSecurityNumber = "uwu";
         final var givenAvailablePoints = 15;
-        final DrivingLicence randomDrivingLicence = DrivingLicence
+        final DrivingLicence givenDrivingLicence = DrivingLicence
                 .builder()
                 .id(givenId)
                 .availablePoints(givenAvailablePoints)
-                .driverSocialSecurityNumber(givenSocialSecuriteNumber)
+                .driverSocialSecurityNumber(givenSocialSecurityNumber)
                 .build();
-        // WHEN
+        // WHEN (STUB)
+        doThrow(InvalidDrivingLicenceException.class)
+                .when(drivingLicenceSaverService)
+                .saveDrivingLicence(givenId, givenDrivingLicence);
+
         // THEN
-        assertThatExceptionOfType(InvalidDrivingLicenceException.class)
-                .isThrownBy(() -> drivingLicenceCheckReturnService
-                .checkReturn(givenId, randomDrivingLicence));
+        assertThatException().isThrownBy(() -> drivingLicenceCheckReturnService
+                .checkReturnedDrivingLicence(givenId, givenDrivingLicence));
     }
 
 }
