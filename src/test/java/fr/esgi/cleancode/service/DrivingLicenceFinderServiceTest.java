@@ -44,10 +44,6 @@ class DrivingLicenceFinderServiceTest {
     void shouldNotFindDrivingLicenceById() {
         // GIVEN
         final var givenId = UUID.randomUUID();
-        final var givenDrivingLicence = DrivingLicence
-                .builder()
-                .id(givenId)
-                .build();
         /*
             refactoring this to make it nullable and not empty because
             we may not have empty object in the program
