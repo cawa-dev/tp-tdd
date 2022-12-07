@@ -12,7 +12,6 @@ public class DrivingLicenceFinderService {
 
     private final InMemoryDatabase database;
 
-    /*public Optional<DrivingLicence> findById(UUID drivingLicenceId) {
-
-    }*/
+    public Optional<DrivingLicence> findById(UUID drivingLicenceId) {
+    }
 }
