@@ -9,6 +9,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.internal.matchers.InstanceOf;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import static org.assertj.core.api.Assertions.*;
@@ -22,6 +23,9 @@ public class DrivingLicenceCreationTest {
 
     @Mock
     private DrivingLicenceChecker drivingLicenceChecker;
+
+    @Mock
+    private DrivingLicenceGenerationService drivingLicenceGenerationServiceMock;
 
     @Test
     public void drivingLicenceShouldBeCreateIfItHasTwelvePoints() {
@@ -72,4 +76,18 @@ public class DrivingLicenceCreationTest {
                 .generateDrivingLicenceWhenSocialSecurityNumberIsProvidedAndItHasBeenChecked(givenSecurityNumberValid);
         verifyNoMoreInteractions(drivingLicenceChecker);
     }
+
+    @Test
+    public void shouldReturnDrvingLicencObjectWhenGenerated() {
+        // STUBBER
+        doReturn(new InstanceOf(DrivingLicence.class))
+                .when(drivingLicenceGenerationServiceMock)
+                .generateDrivingLicence(anyInt(), anyString());
+        // WHEN
+        final DrivingLicence drivingLicence = drivingLicenceGenerationService
+                .generateDrivingLicence(anyInt(), anyString());
+        // THEN
+        assertThat(drivingLicence).isNotNull();
+    }
+
 }
