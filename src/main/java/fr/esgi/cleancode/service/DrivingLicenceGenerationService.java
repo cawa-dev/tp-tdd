@@ -10,7 +10,7 @@ public class DrivingLicenceGenerationService {
 
     private final DrivingLicenceChecker drivingLicenceChecker;
 
-    protected DrivingLicence generateDrivingLicence(int availablePoints, String socialSecurityNumber){
+    protected DrivingLicence generateDrivingLicence(int availablePoints, String socialSecurityNumber) {
         generateDrivingLicenceWithPoints(availablePoints);
         generateDrivingLicenceWhenSocialSecurityNumberIsProvidedAndItHasBeenChecked(socialSecurityNumber);
         return DrivingLicence
@@ -20,21 +20,13 @@ public class DrivingLicenceGenerationService {
                 .build();
     }
 
-    protected DrivingLicence generateDrivingLicenceWithPoints(int sourceAvailablePoints) throws InvalidAvailablesPointsException {
+    protected void generateDrivingLicenceWithPoints(int sourceAvailablePoints) throws InvalidAvailablesPointsException {
         if (sourceAvailablePoints != 12) {
             throw new InvalidAvailablesPointsException("You cannot create an Driving Licence with : " + sourceAvailablePoints + " points");
         }
-        return DrivingLicence
-                .builder()
-                .availablePoints(12)
-                .build();
     }
 
-    protected DrivingLicence generateDrivingLicenceWhenSocialSecurityNumberIsProvidedAndItHasBeenChecked(String sourceDriverSocialSecurityNumber) throws InvalidDriverSocialSecurityNumberException {
+    protected void generateDrivingLicenceWhenSocialSecurityNumberIsProvidedAndItHasBeenChecked(String sourceDriverSocialSecurityNumber) throws InvalidDriverSocialSecurityNumberException {
         drivingLicenceChecker.checkSocialSecurityNumberValidity(sourceDriverSocialSecurityNumber);
-        return DrivingLicence
-                .builder()
-                .driverSocialSecurityNumber("123456789123456")
-                .build();
     }
 }

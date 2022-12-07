@@ -2,7 +2,6 @@ package fr.esgi.cleancode.service;
 
 import fr.esgi.cleancode.exception.InvalidAvailablesPointsException;
 import fr.esgi.cleancode.exception.InvalidDriverSocialSecurityNumberException;
-import fr.esgi.cleancode.model.DrivingLicence;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -12,7 +11,8 @@ import org.mockito.Mock;
 import org.mockito.internal.matchers.InstanceOf;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
+import static org.assertj.core.api.Assertions.assertThatNoException;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -29,17 +29,10 @@ public class DrivingLicenceCreationTest {
 
     @Test
     public void drivingLicenceShouldBeCreateIfItHasTwelvePoints() {
-        // GIVEN
         final var givenAvailablePoints = 12;
-        // WHEN
-        final DrivingLicence drivingLicence = drivingLicenceGenerationService
-                .generateDrivingLicenceWithPoints(givenAvailablePoints);
-        final var drivingLicencePoints = drivingLicence
-                .getAvailablePoints();
-        // THEN
-        assertThat(givenAvailablePoints).isEqualTo(drivingLicencePoints);
-        assertThatNoException().isThrownBy(() -> drivingLicenceGenerationService
-                .generateDrivingLicenceWithPoints(drivingLicencePoints));
+        assertThatNoException()
+                .isThrownBy(() -> drivingLicenceGenerationService
+                        .generateDrivingLicenceWithPoints(givenAvailablePoints));
     }
 
     @Test

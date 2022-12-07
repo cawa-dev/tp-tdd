@@ -16,8 +16,9 @@ public class DrivingLicenceSaverService {
         final int availablePoints = sourceDrivingLicence.getAvailablePoints();
         final var socialSecurityNumber = sourceDrivingLicence.getDriverSocialSecurityNumber();
 
-        drivingLicenceGenerationService.generateDrivingLicence(availablePoints, socialSecurityNumber);
+        DrivingLicence drivingLicenceChecked = drivingLicenceGenerationService
+                .generateDrivingLicence(availablePoints, socialSecurityNumber);
 
-        inMemoryDatabase.save(sourceId, sourceDrivingLicence);
+        inMemoryDatabase.save(sourceId, drivingLicenceChecked);
     }
 }
