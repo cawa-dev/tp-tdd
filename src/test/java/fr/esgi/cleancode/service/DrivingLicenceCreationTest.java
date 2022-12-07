@@ -80,7 +80,7 @@ public class DrivingLicenceCreationTest {
     @Test
     public void shouldReturnDrvingLicencObjectWhenGenerated() {
         // STUBBER
-        doReturn(new InstanceOf(DrivingLicence.class))
+        doReturn(DrivingLicence.builder().build())
                 .when(drivingLicenceGenerationServiceMock)
                 .generateDrivingLicence(anyInt(), anyString());
         // WHEN
