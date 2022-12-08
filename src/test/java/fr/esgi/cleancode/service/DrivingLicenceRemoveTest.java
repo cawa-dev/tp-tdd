@@ -23,13 +23,12 @@ public class DrivingLicenceRemoveTest {
     private InMemoryDatabase inMemoryDatabase;
 
     @Test
-    void shouldThrowResourceNotFoundExceptionWhenDrivingLicenceIsNotPresent() {
+    void shouldThrowWhenDrivingLicenceIsNotFound() {
         // GIVEN
         final var givenId = UUID.randomUUID();
-
         // WHEN
-        when(inMemoryDatabase.findById(givenId)).thenThrow(ResourceNotFoundException.class);
-
+        when(inMemoryDatabase.findById(givenId))
+                .thenThrow(ResourceNotFoundException.class);
         // THEN
         assertThatExceptionOfType(ResourceNotFoundException.class)
                 .isThrownBy(()-> drivingLicenceFinderService
@@ -37,10 +36,9 @@ public class DrivingLicenceRemoveTest {
     }
 
     @Test
-    void shouldNotThrowResourceNotFoundExceptionWhenDrivingLicenceIsNotPresent() {
+    void shouldNotThrownWhenDrivingLicenceIsFound() {
         // GIVEN
         final var givenId = UUID.randomUUID();
-
         drivingLicenceFinderService.findById(givenId);
         // WHEN & THEN
         assertThatNoException()
