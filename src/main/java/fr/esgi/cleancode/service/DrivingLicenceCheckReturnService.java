@@ -9,8 +9,8 @@ import java.util.UUID;
 public class DrivingLicenceCheckReturnService {
     private final DrivingLicenceSaverService drivingLicenceSaverService;
 
-    public DrivingLicence checkReturnedDrivingLicence(UUID id, DrivingLicence randomDrivingLicence) {
-        drivingLicenceSaverService.saveDrivingLicence(id, randomDrivingLicence);
-        return randomDrivingLicence;
+    public DrivingLicence checkReturnedDrivingLicence(UUID id, DrivingLicence drivingLicence) {
+        drivingLicenceSaverService.saveDrivingLicence(id, drivingLicence);
+        return drivingLicence;
     }
 }
