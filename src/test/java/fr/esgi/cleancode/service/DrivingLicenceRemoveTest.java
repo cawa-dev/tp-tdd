@@ -18,6 +18,12 @@ import static org.mockito.Mockito.*;
 @ExtendWith(MockitoExtension.class)
 public class DrivingLicenceRemoveTest {
 
+    @Mock
+    DrivingLicenceFinderService drivingLicenceFinderService;
+
+    @InjectMocks
+    DrivingLicenceRemoveService drivingLicenceRemoveService;
+
     @Test
     void shouldRemovePointFromDrivingLicence() {
         // GIVEN
