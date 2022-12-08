@@ -1,6 +1,9 @@
 package fr.esgi.cleancode.service;
 
 import fr.esgi.cleancode.database.InMemoryDatabase;
+import fr.esgi.cleancode.exception.InvalidDriverSocialSecurityNumberException;
+import fr.esgi.cleancode.exception.InvalidDrivingLicenceException;
+import fr.esgi.cleancode.exception.ResourceNotFoundException;
 import fr.esgi.cleancode.model.DrivingLicence;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -12,6 +15,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
