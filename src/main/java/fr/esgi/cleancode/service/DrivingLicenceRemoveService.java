@@ -11,7 +11,7 @@ public class DrivingLicenceRemoveService {
     public DrivingLicence removePoints(DrivingLicence drivingLicence, int pointsToRemoveFromDrivingLicence) {
         final var drivingLicencePoints = drivingLicence.getAvailablePoints();
 
-        if(drivingLicencePoints < pointsToRemoveFromDrivingLicence){
+        if (drivingLicencePoints < pointsToRemoveFromDrivingLicence) {
             throw new InvalidAvailablesPointsException("You cannot remove more points than existing !");
         }
 

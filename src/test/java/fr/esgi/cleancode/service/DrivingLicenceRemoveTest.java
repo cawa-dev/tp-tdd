@@ -41,6 +41,7 @@ public class DrivingLicenceRemoveTest {
         assertThat(drivingLicenceAvailablePointsAfterRemove)
                 .isEqualTo(givenAvailablePoints - pointsToRemoveFromDrivingLicence);
     }
+
     @Test
     void shouldNotRemovePointsIfDrivingLicencePointsIsLessThanZero() {
         // GIVEN
@@ -55,7 +56,8 @@ public class DrivingLicenceRemoveTest {
 
         // WHEN & THEN
         assertThatExceptionOfType(InvalidAvailablesPointsException.class)
-                .isThrownBy(()-> drivingLicenceRemoveService.removePoints(generatedDrivingLicence, pointsToRemoveFromDrivingLicence));
+                .isThrownBy(() -> drivingLicenceRemoveService
+                        .removePoints(generatedDrivingLicence, pointsToRemoveFromDrivingLicence));
     }
 
 }
