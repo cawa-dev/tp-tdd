@@ -1,5 +1,6 @@
 package fr.esgi.cleancode.service;
 
+import fr.esgi.cleancode.exception.InvalidAvailablesPointsException;
 import fr.esgi.cleancode.model.DrivingLicence;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -10,6 +11,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
 @ExtendWith(MockitoExtension.class)
 public class DrivingLicenceRemoveTest {
@@ -50,15 +52,10 @@ public class DrivingLicenceRemoveTest {
                 .id(givenId)
                 .availablePoints(givenAvailablePoints)
                 .build();
-        // WHEN
-        final var drivingLicenceAfter = drivingLicenceRemoveService
-                .removePoints(generatedDrivingLicence, pointsToRemoveFromDrivingLicence);
-        final int drivingLicenceAvailablePointsAfterRemove = drivingLicenceAfter.getAvailablePoints();
-        // THEN
-        assertThat(drivingLicenceAvailablePointsAfterRemove)
-                .isEqualTo(givenAvailablePoints - pointsToRemoveFromDrivingLicence);
 
-        assertThat(drivingLicenceAvailablePointsAfterRemove).isGreaterThan(0);
+        // WHEN & THEN
+        assertThatExceptionOfType(InvalidAvailablesPointsException.class)
+                .isThrownBy(()-> drivingLicenceRemoveService.removePoints(generatedDrivingLicence, pointsToRemoveFromDrivingLicence));
     }
 
 }
