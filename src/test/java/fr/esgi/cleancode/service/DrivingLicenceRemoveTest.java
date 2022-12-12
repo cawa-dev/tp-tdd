@@ -19,6 +19,9 @@ public class DrivingLicenceRemoveTest {
     @Mock
     DrivingLicenceFinderService drivingLicenceFinderService;
 
+    @Mock
+    DrivingLicenceSaverService drivingLicenceSaverService;
+
     @InjectMocks
     DrivingLicenceRemoveService drivingLicenceRemoveService;
 
@@ -61,7 +64,7 @@ public class DrivingLicenceRemoveTest {
     }
 
     @Test
-    void shouldUpdateDrivingLicenceInDatabase () {
+    void shouldUpdateDrivingLicenceInDatabase() {
         // GIVEN
         final var pointsToRemoveFromDrivingLicence = 2;
         final var givenId = UUID.randomUUID();
@@ -72,17 +75,11 @@ public class DrivingLicenceRemoveTest {
                 .availablePoints(givenAvailablePoints)
                 .build();
         // WHEN
-
-        // remove points to a driving licence and store it into an variable to test it
+        // remove points to a driving licence and store it into a variable to test it
         final var drivingLicenceAfter = drivingLicenceRemoveService
                 .removePoints(generatedDrivingLicence, pointsToRemoveFromDrivingLicence);
-        final int drivingLicenceAvailablePointsAfterRemove = drivingLicenceAfter.getAvailablePoints();
-
-        // update the driving licence in the database to check it
-        drivingLicenceRemoveService.updateDrivingLicence(givenId, generatedDrivingLicence);
-
         // THEN
-        assertThat(generatedDrivingLicence).isEqualTo(drivingLicenceAfter);
+        assertThat(generatedDrivingLicence).isNotEqualTo(drivingLicenceAfter);
     }
 
 }
