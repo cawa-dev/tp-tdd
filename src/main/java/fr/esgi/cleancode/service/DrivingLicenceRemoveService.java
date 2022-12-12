@@ -3,25 +3,13 @@ package fr.esgi.cleancode.service;
 import fr.esgi.cleancode.model.DrivingLicence;
 import lombok.RequiredArgsConstructor;
 
-import java.util.UUID;
-
 @RequiredArgsConstructor
 public class DrivingLicenceRemoveService {
     private final DrivingLicenceFinderService drivingLicenceFinderService;
 
-    public int removePoints(UUID givenId, int pointsToRemoveFromDrivingLicence) {
-        final var drivingLicence = drivingLicenceFinderService
-                .findById(givenId)
-                .orElse(
-                        DrivingLicence
-                                .builder()
-                                .id(givenId)
-                                .availablePoints(12)
-                                .build()
-                );
-
+    public DrivingLicence removePoints(DrivingLicence drivingLicence, int pointsToRemoveFromDrivingLicence) {
         final var drivingLicencePoints = drivingLicence.getAvailablePoints();
-
-        return drivingLicencePoints - pointsToRemoveFromDrivingLicence;
+        final var drivingLicencePointsAfterRemoved = drivingLicencePoints - pointsToRemoveFromDrivingLicence;
+        return drivingLicence.withAvailablePoints(drivingLicencePointsAfterRemoved);
     }
 }
