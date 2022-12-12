@@ -39,4 +39,26 @@ public class DrivingLicenceRemoveTest {
         assertThat(drivingLicenceAvailablePointsAfterRemove)
                 .isEqualTo(givenAvailablePoints - pointsToRemoveFromDrivingLicence);
     }
+    @Test
+    void shouldNotRemovePointsIfDrivingLicencePointsIsLessThanZero() {
+        // GIVEN
+        final var pointsToRemoveFromDrivingLicence = 12;
+        final var givenId = UUID.randomUUID();
+        final var givenAvailablePoints = 2;
+        final var generatedDrivingLicence = DrivingLicence
+                .builder()
+                .id(givenId)
+                .availablePoints(givenAvailablePoints)
+                .build();
+        // WHEN
+        final var drivingLicenceAfter = drivingLicenceRemoveService
+                .removePoints(generatedDrivingLicence, pointsToRemoveFromDrivingLicence);
+        final int drivingLicenceAvailablePointsAfterRemove = drivingLicenceAfter.getAvailablePoints();
+        // THEN
+        assertThat(drivingLicenceAvailablePointsAfterRemove)
+                .isEqualTo(givenAvailablePoints - pointsToRemoveFromDrivingLicence);
+
+        assertThat(drivingLicenceAvailablePointsAfterRemove).isGreaterThan(0);
+    }
+
 }
