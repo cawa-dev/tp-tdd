@@ -64,7 +64,7 @@ public class DrivingLicenceRemoveTest {
     }
 
     @Test
-    void shouldUpdateDrivingLicenceInDatabase() {
+    void shouldRemovePointsFromDrivingLicenceAndUpdateIt() {
         // GIVEN
         final var pointsToRemoveFromDrivingLicence = 2;
         final var givenId = UUID.randomUUID();
@@ -75,7 +75,6 @@ public class DrivingLicenceRemoveTest {
                 .availablePoints(givenAvailablePoints)
                 .build();
         // WHEN
-        // remove points to a driving licence and store it into a variable to test it
         final var drivingLicenceAfter = drivingLicenceRemoveService
                 .removePoints(generatedDrivingLicence, pointsToRemoveFromDrivingLicence);
         // THEN

@@ -4,8 +4,6 @@ import fr.esgi.cleancode.exception.InvalidAvailablesPointsException;
 import fr.esgi.cleancode.model.DrivingLicence;
 import lombok.RequiredArgsConstructor;
 
-import java.util.UUID;
-
 @RequiredArgsConstructor
 public class DrivingLicenceRemoveService {
 
@@ -13,7 +11,7 @@ public class DrivingLicenceRemoveService {
 
     public DrivingLicence removePoints(DrivingLicence drivingLicence, int pointsToRemoveFromDrivingLicence) {
         final var drivingLicencePoints = drivingLicence.getAvailablePoints();
-        final UUID drivingLicenceId = drivingLicence.getId();
+        final var drivingLicenceId = drivingLicence.getId();
 
         if (drivingLicencePoints < pointsToRemoveFromDrivingLicence) {
             throw new InvalidAvailablesPointsException("You cannot remove more points than existing !");
@@ -21,7 +19,7 @@ public class DrivingLicenceRemoveService {
 
         final var drivingLicencePointsAfterRemoved = drivingLicencePoints - pointsToRemoveFromDrivingLicence;
 
-        final DrivingLicence drivingLicenceUpdated = drivingLicence
+        final var drivingLicenceUpdated = drivingLicence
                 .withAvailablePoints(drivingLicencePointsAfterRemoved);
 
         drivingLicenceSaverService.saveDrivingLicence(drivingLicenceId, drivingLicenceUpdated);
