@@ -60,4 +60,29 @@ public class DrivingLicenceRemoveTest {
                         .removePoints(generatedDrivingLicence, pointsToRemoveFromDrivingLicence));
     }
 
+    @Test
+    void shouldUpdateDrivingLicenceInDatabase () {
+        // GIVEN
+        final var pointsToRemoveFromDrivingLicence = 2;
+        final var givenId = UUID.randomUUID();
+        final var givenAvailablePoints = 12;
+        final var generatedDrivingLicence = DrivingLicence
+                .builder()
+                .id(givenId)
+                .availablePoints(givenAvailablePoints)
+                .build();
+        // WHEN
+
+        // remove points to a driving licence and store it into an variable to test it
+        final var drivingLicenceAfter = drivingLicenceRemoveService
+                .removePoints(generatedDrivingLicence, pointsToRemoveFromDrivingLicence);
+        final int drivingLicenceAvailablePointsAfterRemove = drivingLicenceAfter.getAvailablePoints();
+
+        // update the driving licence in the database to check it
+        drivingLicenceRemoveService.updateDrivingLicence(givenId, generatedDrivingLicence);
+
+        // THEN
+        assertThat(generatedDrivingLicence).isEqualTo(drivingLicenceAfter);
+    }
+
 }
