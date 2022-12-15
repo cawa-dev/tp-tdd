@@ -10,11 +10,12 @@ import java.util.UUID;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @ExtendWith(MockitoExtension.class)
-class DrivingLicenceIdGenerationServiceTest {
+class DrivingLicenceIdGenerationTest {
 
     @InjectMocks
     private DrivingLicenceIdGenerationService service;
 
+    // 2.1
     @Test
     void should_generate_valid_UUID() {
         final var actual = service.generateNewDrivingLicenceId();

@@ -80,5 +80,4 @@ public class DrivingLicenceRemoveTest {
         // THEN
         assertThat(generatedDrivingLicence).isNotEqualTo(drivingLicenceAfter);
     }
-
 }

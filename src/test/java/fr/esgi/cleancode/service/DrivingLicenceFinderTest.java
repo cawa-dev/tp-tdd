@@ -16,7 +16,7 @@ import static org.assertj.core.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-class DrivingLicenceFinderServiceTest {
+class DrivingLicenceFinderTest {
 
     @InjectMocks
     private DrivingLicenceFinderService drivingLicenceFinderService;
