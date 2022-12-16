@@ -16,7 +16,7 @@ import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 import static org.mockito.Mockito.doThrow;
 
 @ExtendWith(MockitoExtension.class)
-public class DrivingLicenceReturnTest {
+class DrivingLicenceReturnTest {
 
     @InjectMocks
     private DrivingLicenceCheckReturnService drivingLicenceCheckReturnService;

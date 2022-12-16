@@ -3,6 +3,7 @@ package fr.esgi.cleancode.service;
 import fr.esgi.cleancode.database.InMemoryDatabase;
 import fr.esgi.cleancode.exception.ResourceNotFoundException;
 import fr.esgi.cleancode.model.DrivingLicence;
+import jdk.jfr.Description;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -24,8 +25,10 @@ class DrivingLicenceFinderTest {
     @Mock
     private InMemoryDatabase inMemoryDatabase;
 
+    // 1.1 & 1.2
     @Test
-    void shouldFindDrivingLicenceById() {
+    @Description("This test should return an optional driving licence when she's found")
+    void should_find_driving_licence_by_id() {
         // GIVEN
         final var givenId = UUID.randomUUID();
         final var givenDrivingLicence = DrivingLicence
@@ -33,52 +36,68 @@ class DrivingLicenceFinderTest {
                 .id(givenId)
                 .build();
         // WHEN
-        when(inMemoryDatabase.findById(givenId)).thenReturn(Optional.of(givenDrivingLicence));
-        final Optional<DrivingLicence> optionalDrivingLicence = drivingLicenceFinderService.findById(givenId);
+        when(inMemoryDatabase
+                .findById(givenId))
+                .thenReturn(Optional.of(givenDrivingLicence));
+        final var optionalDrivingLicence = drivingLicenceFinderService.findById(givenId);
         // THEN
-        assertThat(optionalDrivingLicence).containsSame(givenDrivingLicence);
+        assertThat(optionalDrivingLicence)
+                .containsSame(givenDrivingLicence);
         verify(inMemoryDatabase).findById(givenId);
         verifyNoMoreInteractions(inMemoryDatabase);
     }
 
+    // 1.1 & 1.2
     @Test
-    void shouldNotFindDrivingLicenceById() {
-        // GIVEN
-        final var givenId = UUID.randomUUID();
-        /*
-            refactoring this to make it nullable and not empty because
-            we may not have empty object in the program
-        */
-        // WHEN
-        when(inMemoryDatabase.findById(givenId)).thenReturn(Optional.empty());
-        final Optional<DrivingLicence> optionalDrivingLicence = drivingLicenceFinderService.findById(givenId);
-        // THEN
-        assertThat(optionalDrivingLicence).isEmpty();
-        verify(inMemoryDatabase).findById(givenId);
-        verifyNoMoreInteractions(inMemoryDatabase);
-    }
-
-    @Test
-    void shouldThrowWhenDrivingLicenceIsNotFound() {
+    @Description("This test should not return an optional driving licence when she's not found")
+    void should_not_find_driving_licence_by_id() {
         // GIVEN
         final var givenId = UUID.randomUUID();
         // WHEN
         when(inMemoryDatabase.findById(givenId))
-                .thenThrow(new ResourceNotFoundException("Driving Licence with id : " + givenId + " not found !"));
+                .thenReturn(Optional.empty());
+        final var optionalDrivingLicence = drivingLicenceFinderService
+                .findById(givenId);
         // THEN
-        assertThatExceptionOfType(ResourceNotFoundException.class)
-                .isThrownBy(() -> drivingLicenceFinderService
-                        .findById(givenId));
+        assertThat(optionalDrivingLicence)
+                .isEmpty();
+        verify(inMemoryDatabase)
+                .findById(givenId);
+        verifyNoMoreInteractions(inMemoryDatabase);
     }
 
+    // 1.1
     @Test
-    void shouldNotThrowWhenDrivingLicenceIsFound() {
+    @Description("This test should not throw exception when an driving licence is found")
+    void should_not_throw_when_driving_licence_is_found() {
         // GIVEN
         final var givenId = UUID.randomUUID();
-        drivingLicenceFinderService.findById(givenId);
+        drivingLicenceFinderService
+                .findById(givenId);
         // WHEN & THEN
         assertThatNoException()
-                .isThrownBy(() -> drivingLicenceFinderService
-                        .findById(givenId));
+                .isThrownBy(
+                        () -> drivingLicenceFinderService
+                                .findById(givenId)
+                );
+    }
+
+    // 1.1
+    @Test
+    @Description("This test should throw exception when an driving licence is not found")
+    void should_throw_when_driving_licence_is_not_found() {
+        // GIVEN
+        final var givenId = UUID.randomUUID();
+        // WHEN
+        when(inMemoryDatabase
+                .findById(givenId))
+                .thenThrow(new ResourceNotFoundException("Driving Licence with id : " + givenId + " not found !")
+                );
+        // THEN
+        assertThatExceptionOfType(ResourceNotFoundException.class)
+                .isThrownBy(
+                        () -> drivingLicenceFinderService
+                                .findById(givenId)
+                );
     }
 }

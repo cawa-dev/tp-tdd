@@ -8,7 +8,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 @RequiredArgsConstructor
-public class DrivingLicenceFinderService {
+public final class DrivingLicenceFinderService {
 
     private final InMemoryDatabase database;
 
